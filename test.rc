@@ -1,0 +1,259 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\test.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\test.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 test"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "test 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2014",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+END
+
+IDD_TEST_DIALOG DIALOGEX 0, 0, 355, 203
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "北斗短报文地面站界面"
+FONT 14, "楷体_GB2312"
+BEGIN
+    EDITTEXT        IDC_Year,38,91,25,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_Weidu,147,91,25,13,ES_AUTOHSCROLL
+    EDITTEXT        IDC_Haiba,148,123,59,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_Jingdu,146,59,24,14,ES_AUTOHSCROLL
+    LTEXT           "年",IDC_STATIC,64,92,8,9
+    EDITTEXT        IDC_Month,73,91,17,14,ES_AUTOHSCROLL
+    LTEXT           "月",IDC_STATIC,93,92,8,10
+    EDITTEXT        IDC_Day,101,91,26,14,ES_AUTOHSCROLL
+    LTEXT           "日",IDC_STATIC,128,92,8,8
+    EDITTEXT        IDC_Hour,39,118,25,14,ES_AUTOHSCROLL
+    LTEXT           "时",IDC_STATIC,65,120,8,8
+    EDITTEXT        IDC_Min,74,118,18,14,ES_AUTOHSCROLL
+    LTEXT           "分",IDC_STATIC,94,120,8,8
+    EDITTEXT        IDC_Sec,103,118,25,14,ES_AUTOHSCROLL
+    LTEXT           "秒",IDC_STATIC,129,120,8,8
+    LTEXT           "度",IDC_STATIC,170,61,8,8
+    EDITTEXT        IDC_Jingduf,179,60,43,14,ES_AUTOHSCROLL
+    LTEXT           "分",IDC_STATIC,224,61,8,8
+    EDITTEXT        IDC_Jing,233,60,25,14,ES_AUTOHSCROLL
+    LTEXT           "度",IDC_STATIC,175,93,8,8
+    EDITTEXT        IDC_Weiduf,185,91,39,13,ES_AUTOHSCROLL
+    LTEXT           "分",IDC_STATIC,226,93,8,8
+    EDITTEXT        IDC_Wei,234,91,25,13,ES_AUTOHSCROLL
+    LTEXT           "米",IDC_STATIC,209,125,9,8
+    LTEXT           "日期",IDC_STATIC,19,92,16,8
+    LTEXT           "时间",IDC_STATIC,20,120,16,8
+    GROUPBOX        "北京时间",IDC_BEIJINGSHIJIAN,15,75,124,65
+    GROUPBOX        "经度",IDC_JINGDU1,143,46,118,32
+    GROUPBOX        "纬度",IDC_WEIDU1,143,79,118,30
+    GROUPBOX        "海拔高度",IDC_HAIBAGAODU,143,112,118,28
+    LTEXT           "飞机号",IDC_STATIC,16,53,27,11,NOT WS_GROUP
+    EDITTEXT        IDC_JIHAO,48,52,46,14,ES_AUTOHSCROLL
+    GROUPBOX        "参数配置",IDC_STATIC,10,5,91,28
+    LTEXT           "串口",IDC_STATIC,14,18,16,8
+    PUSHBUTTON      "打开串口",IDC_BUTTON1,121,15,50,14
+    GROUPBOX        "发送区",IDC_STATIC,10,148,253,50
+    EDITTEXT        IDC_SEND,15,158,244,36,ES_AUTOHSCROLL
+    LTEXT           "收信方",IDC_STATIC,272,147,24,8
+    EDITTEXT        IDC_EDIT_PHONE_NUM,303,144,46,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "发送",IDC_BUTTON2,274,167,50,14
+    COMBOBOX        IDC_COMBO5,33,17,61,45,CBS_DROPDOWN | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "接收区",IDC_STATIC,10,38,253,106
+    GROUPBOX        "发动机的状态",IDC_STATIC,265,5,83,47
+    LTEXT           "发动机1",IDC_STATIC,271,20,28,8
+    EDITTEXT        IDC_EDIT1,304,18,41,12,ES_AUTOHSCROLL
+    LTEXT           "发动机2",IDC_STATIC,271,37,28,8
+    EDITTEXT        IDC_EDIT2,304,35,41,12,ES_AUTOHSCROLL
+    LTEXT           "横滚角",IDC_STATIC,271,71,24,8
+    EDITTEXT        IDC_EDIT3,304,69,40,14,ES_AUTOHSCROLL
+    LTEXT           "俯仰角",IDC_STATIC,271,93,24,8
+    EDITTEXT        IDC_EDIT4,304,92,40,14,ES_AUTOHSCROLL
+    LTEXT           "航向角",IDC_STATIC,271,115,24,8
+    EDITTEXT        IDC_EDIT5,304,115,40,14,ES_AUTOHSCROLL
+    GROUPBOX        "方位信息",IDC_STATIC,266,56,83,79
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "test Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "test\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2014\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "test.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "test 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 test(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\test.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,51 @@
+/**
+ * This is the actual parser.
+ * It reads one character at a time
+ * setting dbw_info.msg_available to TRUE
+ * after a full line.
+ */
+void dbw_info_parse_char( uint8_t c ) {
+  //reject empty lines
+
+
+  // fill the buffer, unless it's full
+  if (dbw_info.msg_len < DBW_MAXLEN - 1) {
+
+    // messages end with a linefeed
+    //AD: TRUNK:       if (c == '\r' || c == '\n')
+    if (dbw_info.msg_len < dbw_info.set_len-1) {
+			dbw_info.msg_buf[dbw_info.msg_len] = c;
+      dbw_info.msg_len ++;
+    } else {
+			dbw_info.msg_buf[dbw_info.msg_len] = c;
+      dbw_info.msg_len ++;
+			dbw_info.msg_available = TRUE;
+    }
+		if(dbw_info.msg_len==6)
+		{
+			dbw_info.set_temp_len = c;
+		}
+		if(dbw_info.msg_len==7)
+		{
+			dbw_info.set_temp_len = (dbw_info.set_temp_len << 8) + c;
+			if((dbw_info.set_temp_len>=11)&&(dbw_info.set_temp_len<=230))
+			{
+				dbw_info.set_len = dbw_info.set_temp_len;
+			}
+		}
+		if ( c == '$')
+		{
+      dbw_info.msg_buf[0] = c;
+      dbw_info.msg_len =1;   
+			dbw_info.set_len = DBW_MAXLEN-1;
+			dbw_info.set_temp_len = DBW_MAXLEN-1;
+		}
+
+  }
+
+  if (dbw_info.msg_len >= DBW_MAXLEN - 1)
+  {
+	   dbw_info.msg_available = TRUE;
+  }
+   
+}
