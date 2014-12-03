@@ -46,10 +46,15 @@
 #define IDC_BUTTON2                     1053
 #define IDC_COMBO5                      1055
 #define IDC_EDIT1                       1056
+#define IDC_FDJ1                        1056
 #define IDC_EDIT2                       1057
+#define IDC_FDJ2                        1057
 #define IDC_EDIT3                       1058
+#define IDC_ROLL                        1058
 #define IDC_EDIT4                       1059
+#define IDC_PITCH                       1059
 #define IDC_EDIT5                       1060
+#define IDC_YAW                         1060
 
 // Next default values for new objects
 // 

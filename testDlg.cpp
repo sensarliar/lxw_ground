@@ -439,6 +439,13 @@ BOOL CTestDlg::OnRecvComData()
 		CString m_month;
 		CString m_year;
 		CString m_jihao;
+		CString m_fadongji;
+		char fadongji;
+		char fadongji1;
+		char fadongji2;
+
+		CString fadongji1_str;
+		CString fadongji2_str;
 
 		CString m_weidu;
 		CString m_weiduf;
@@ -447,12 +454,26 @@ BOOL CTestDlg::OnRecvComData()
 		CString m_jingduf;
 		CString m_jing;
 		CString m_haiba;
+		CString m_roll;
+		CString m_pitch;
+		CString m_yaw;
+
 
 		//char ch0;
 
 		//机号信息
 		m_jihao=strBuffer.Left(3);
 		SetDlgItemText(IDC_JIHAO,m_jihao);
+		
+		fadongji=strBuffer.GetAt(3);
+		fadongji1=((fadongji>>1)&0x1)+'0';
+		fadongji1_str=CString(fadongji1);
+		fadongji2=((fadongji>>5)&0x1)+'0';
+		fadongji2_str=CString(fadongji2);
+		SetDlgItemText(IDC_FDJ1,fadongji1_str);
+		SetDlgItemText(IDC_FDJ2,fadongji2_str);
+		
+
 
 		//时间信息
 		hour=strBuffer.Mid(4,2);
@@ -509,6 +530,22 @@ BOOL CTestDlg::OnRecvComData()
 						
 		m_year=strBuffer.Mid(47,2);
 		SetDlgItemText(IDC_Year,m_year);
+		
+		int index_comma;
+		int index_comma_pre;
+		index_comma = strBuffer.Find(',',49);
+		m_roll=strBuffer.Mid(49,index_comma-49);
+		SetDlgItemText(IDC_ROLL,m_roll);
+		index_comma_pre=index_comma+1;
+
+		index_comma = strBuffer.Find(',',index_comma_pre);
+		m_pitch=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);
+		SetDlgItemText(IDC_PITCH,m_pitch);
+		index_comma_pre=index_comma+1;
+
+		index_comma = strBuffer.Find(',',index_comma_pre);
+		m_yaw=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);
+		SetDlgItemText(IDC_YAW,m_yaw);
 						
 	//#endif				
 			strBuffer.Empty();
@@ -548,6 +585,140 @@ void CTestDlg::OnOpen()
 
 }
 
+
+// Len of HoTT serial buffer
+int hott_msg_len = 0;
+
+//uint8_t MSG_TO_SEND[43]="WWW.UCORTEX.COM---gaoming,gaoming,nihao ma";
+char INFO_HEAD[6]="$TXSQ";   //5B
+char INFO_LEN[2]={0x33,0x34};  //2B
+//char INFO_ADDR[4]={0x04,0xE6,0x10};//321040  addr 3B
+//uint8_t MSG_TX_FLAG=0B01000110;     //1B
+char MSG_TX_FLAG=0x46;     //1B
+//uint8_t MSG_TX_ADDR[4]={0x04,0xE6,0x10};//321040  TX addr   //3B
+char MSG_TX_ADDR[4]={0x04,0xE6,0x10};//  TX addr   //3B
+char MSG_TX_LEN[2]={0x00,0x00};      //2B
+char MSG_TX_ACK=0x00;               //1B
+char MSG_TX[211]="gaoming";    //1680bit maxium   NON-MIL 628BIT  78B   17B+MSG +1CRC
+int msg_num=0;  //neirong
+
+
+
+char ALL_HEAD[18];
+
+void init_msg_head(void){
+			 int i,j;
+			hott_msg_len=17+1+msg_num+1;
+			INFO_LEN[1]=(char)(hott_msg_len);
+//  	INFO_LEN[1]=(char)*(hott_msg_len&0xFF00);
+			INFO_LEN[0]= hott_msg_len>>8;
+			MSG_TX_LEN[1]=(msg_num+1)*8;
+			MSG_TX_LEN[0]=(msg_num+1)*8 >> 8;
+	
+			for(i=0,j=0; i<5; i++,j++){
+			ALL_HEAD[i]=INFO_HEAD[j];
+			}
+			for(j=0; j<2; i++,j++){
+			ALL_HEAD[i]=INFO_LEN[j];
+			}
+			for(j=0; j<3; i++,j++){
+			ALL_HEAD[i]=INFO_ADDR[j];
+			}
+
+			ALL_HEAD[i]=MSG_TX_FLAG;
+			i++;
+//			ALL_HEAD[i]=0x46;
+
+			for(j=0; j<3; i++,j++){
+			ALL_HEAD[i]=MSG_TX_ADDR[j];
+			}			
+			for(j=0; j<2; i++,j++){
+			ALL_HEAD[i]=MSG_TX_LEN[j];
+			}	
+		
+			ALL_HEAD[i]=MSG_TX_ACK;
+			i++;	
+			ALL_HEAD[i]=0xa4;
+			i++;
+
+			
+}
+
+
+
+//static void send_one_frame_data(void) {
+void send_one_frame_data(void) {
+    char msg_crc = 0;
+//	int init_len;
+	char *hott_msg_ptr = 0;
+//	char temp;
+
+//	char all_bytes[1024];
+
+	/*
+  if (hott_msg_len == 0) {
+    hott_msg_ptr = 0;
+//    hott_telemetry_is_sending = FALSE;
+//    hott_telemetry_sendig_msgs_id = 0;
+    msg_crc = 0;
+  }
+  else {
+    --hott_msg_len;
+    if (hott_msg_len != 0) {
+      msg_crc += *hott_msg_ptr;
+      uart_transmit(&uart1, *hott_msg_ptr++);
+    } else
+      uart_transmit(&uart1, (int8_t)msg_crc);
+  }
+	*/
+	
+
+/*
+	init_len=hott_msg_len;
+	while(hott_msg_len){
+	    --hott_msg_len;
+    if (hott_msg_len != 0) {
+			if(hott_msg_len == init_len-19)
+			{hott_msg_ptr = MSG_TX;}
+			
+//      msg_crc = msg_crc  *hott_msg_ptr;
+			msg_crc ^= *hott_msg_ptr;
+
+//      uart_transmit(&uart2, *hott_msg_ptr++);
+				
+		} 
+	}
+*/	
+	msg_crc = 0;
+	hott_msg_ptr = ALL_HEAD;
+
+	int len=18;
+	while(len)
+	{
+		msg_crc ^= *hott_msg_ptr;
+		len--;
+		hott_msg_ptr++;
+	}
+
+	len=msg_num;
+	hott_msg_ptr = MSG_TX;
+	while(len)
+	{
+		msg_crc ^= *hott_msg_ptr;
+		len--;
+		hott_msg_ptr++;
+	}
+
+	MSG_TX[msg_num]=msg_crc;
+	MSG_TX[msg_num+1]=0x0d;
+	MSG_TX[msg_num+2]=0x0a;
+
+
+//	uart_transmit(&uart2, temp);	
+
+}
+
+
 void CTestDlg::OnSend() 
 {
 	// TODO: Add your control notification handler code here
@@ -559,21 +730,35 @@ void CTestDlg::OnSend()
 	CString phone_num_str;
 	int phone_num;
 	GetDlgItem(IDC_EDIT_PHONE_NUM)->GetWindowText(phone_num_str);
+/*
+	if(phone_num_str)
+	{
 	phone_num=atoi(phone_num_str);
+	MSG_TX_ADDR[2]=phone_num;
+	MSG_TX_ADDR[1]=phone_num>>8;
+	MSG_TX_ADDR[0]=phone_num>>8;
+
+
+	}
+	*/
 
 	char * text_tx;
-/*	int i = 0;
-	while(text.GetAt(i))
-	{
-	text_tx[i] = text.GetAt(i);
-	i++;
-	}
-*/	
 	text_tx= text.GetBuffer(0);
+	int i=0;
+	while(*text_tx)
+	{
+		MSG_TX[i++]=*text_tx;
+		text_tx++;
+	}
+	msg_num = i;
+	
+	init_msg_head();
+	send_one_frame_data();
+	m_com.write(ALL_HEAD,18);
+	m_com.write(MSG_TX,msg_num+3);
+
 
 //	m_com.write(&text_tx_p);
-	int bytes_temp=1;
-	bytes_temp  = m_com.write((char *)&text_tx);
-
-
+//	int bytes_temp=1;
+//	bytes_temp  = m_com.write((char *)&text_tx);
 }

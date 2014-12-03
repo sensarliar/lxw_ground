@@ -13,7 +13,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (P.R.C.) resources
+// Chinese (中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 #ifdef _WIN32
@@ -135,15 +135,15 @@ BEGIN
     GROUPBOX        "接收区",IDC_STATIC,10,38,253,106
     GROUPBOX        "发动机的状态",IDC_STATIC,265,5,83,47
     LTEXT           "发动机1",IDC_STATIC,271,20,28,8
-    EDITTEXT        IDC_EDIT1,304,18,41,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FDJ1,304,18,41,12,ES_AUTOHSCROLL
     LTEXT           "发动机2",IDC_STATIC,271,37,28,8
-    EDITTEXT        IDC_EDIT2,304,35,41,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_FDJ2,304,35,41,12,ES_AUTOHSCROLL
     LTEXT           "横滚角",IDC_STATIC,271,71,24,8
-    EDITTEXT        IDC_EDIT3,304,69,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ROLL,304,69,40,14,ES_AUTOHSCROLL
     LTEXT           "俯仰角",IDC_STATIC,271,93,24,8
-    EDITTEXT        IDC_EDIT4,304,92,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_PITCH,304,92,40,14,ES_AUTOHSCROLL
     LTEXT           "航向角",IDC_STATIC,271,115,24,8
-    EDITTEXT        IDC_EDIT5,304,115,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_YAW,304,115,40,14,ES_AUTOHSCROLL
     GROUPBOX        "方位信息",IDC_STATIC,266,56,83,79
 END
 
@@ -230,7 +230,7 @@ BEGIN
     IDS_ABOUTBOX            "关于 test(&A)..."
 END
 
-#endif    // Chinese (P.R.C.) resources
+#endif    // Chinese (中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
