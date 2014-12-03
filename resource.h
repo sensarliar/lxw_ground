@@ -55,6 +55,8 @@
 #define IDC_PITCH                       1059
 #define IDC_EDIT5                       1060
 #define IDC_YAW                         1060
+#define IDC_DEBUG                       1061
+#define IDC_COUNT                       1062
 
 // Next default values for new objects
 // 

@@ -27,6 +27,7 @@ public:
 	CTestDlg(CWnd* pParent = NULL);	// standard constructor
 	CString m_shuju;
 	int Bytes;
+//	int rx_counts;
 	_thread_com m_com;//´®¿Ú±äÁ¿
 	//CString m_shuju1;
 	//int ID;

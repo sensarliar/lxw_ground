@@ -35,6 +35,8 @@ char RCV_CMD[255];
 int cmd_rcv_flag;
 int cmd_ch_num;
 
+int rx_counts;
+
 
 
 
@@ -310,12 +312,13 @@ BOOL CTestDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
 	Bytes = 0;
-	
+	rx_counts=0;
 	// TODO: Add extra initialization here
 	//InintCom(2);
 	//m_com.write("TXXXX");
 	//m_com.write("m_shuju=$GPZDA,032232.00,14,05,2009,00,00*67,$GPZDA");
 	//OnRecvComData();
+//	rx_counts=0;
 	
 	
 	dbw_info_impl_init();
@@ -389,14 +392,20 @@ bool CTestDlg::InintCom(int port)
 	}
 	
 	else
+	{
 		m_com.set_hwnd(m_hWnd);//ÉèÖÃ´°¿Ú¾ä±ú
+		((CComboBox*)GetDlgItem(IDC_COMBO5))->EnableWindow(FALSE);
+	}
+
 	return true;
 }
 char receive_buf[1024] = {0};
+char buf_temp[512];
 
-
+CString Rx_win_text;
 BOOL CTestDlg::OnRecvComData()
 {
+	int i;
 	int bytes_temp = 1;
 	bytes_temp = m_com.read((char *)&receive_buf, 1024);
 //	Bytes += bytes_temp;
@@ -404,7 +413,31 @@ BOOL CTestDlg::OnRecvComData()
 	{
 		return false;
 	}
-	int i=0;
+	//SetDlgItemText(IDC_DEBUG,receive_buf);
+	
+	i = 0;
+	while(i<bytes_temp )
+	{
+		if(!receive_buf[i])
+		{
+			buf_temp[i]=' ';
+		}else
+		{
+			buf_temp[i]=receive_buf[i];
+		}
+		i++;
+	}
+	buf_temp[i] = '\0';
+
+	Rx_win_text += buf_temp;
+
+	if(Rx_win_text.GetLength()>2048)
+	{
+		Rx_win_text="  ";
+	}
+	GetDlgItem(IDC_DEBUG)->SetWindowText(Rx_win_text);
+
+	i=0;
 	bytes_temp++;
 	while((bytes_temp--)&&!dbw_info.msg_available)
 	{
@@ -549,8 +582,11 @@ BOOL CTestDlg::OnRecvComData()
 						
 	//#endif				
 			strBuffer.Empty();
-
+			char m_rx_counts[10];
 			cmd_rcv_flag = 0;
+			rx_counts++;
+			itoa(rx_counts,m_rx_counts,10);
+			SetDlgItemText(IDC_COUNT,m_rx_counts);
 
 	}
 
@@ -579,8 +615,11 @@ void CTestDlg::OnOpen()
 	int nIndex = ((CComboBox*)GetDlgItem(IDC_COMBO5))->GetCurSel();
 	
 	InintCom(nIndex);
-	SetTimer(1,60,0);
-	((CComboBox*)GetDlgItem(IDC_COMBO5))->EnableWindow(FALSE);
+	SetTimer(1,600,0);
+//	Delay(10);
+
+	char ICJC_MSG[20]={0x24,0x49,0x43,0x4a,0x43,0x00,0x0c,0x00,0x00,0x00,0x00,0x2b,0x0d,0x0a};
+	m_com.write(ICJC_MSG,14);
 
 
 }
@@ -761,4 +800,9 @@ void CTestDlg::OnSend()
 //	m_com.write(&text_tx_p);
 //	int bytes_temp=1;
 //	bytes_temp  = m_com.write((char *)&text_tx);
+}
+
+void init_send_GETIC(void)
+{
+
 }
