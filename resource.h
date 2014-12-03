@@ -41,9 +41,11 @@
 #define IDC_RECEIVE                     1042
 #define IDC_JIHAO                       1043
 #define IDC_BUTTON1                     1049
+#define IDC_BUTTON_OPEN                 1049
 #define IDC_SEND                        1051
 #define IDC_EDIT_PHONE_NUM              1052
 #define IDC_BUTTON2                     1053
+#define IDC_BUTTON_SEND                 1053
 #define IDC_COMBO5                      1055
 #define IDC_EDIT1                       1056
 #define IDC_FDJ1                        1056
@@ -57,6 +59,7 @@
 #define IDC_YAW                         1060
 #define IDC_DEBUG                       1061
 #define IDC_COUNT                       1062
+#define IDC_DJS                         1063
 
 // Next default values for new objects
 // 

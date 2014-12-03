@@ -36,6 +36,7 @@ int cmd_rcv_flag;
 int cmd_ch_num;
 
 int rx_counts;
+int timer_cnt_60ms = 0;
 
 
 
@@ -594,6 +595,7 @@ BOOL CTestDlg::OnRecvComData()
 	return true;
 }
 
+char m_count_djs[10];
 
 void CTestDlg::OnTimer(UINT nIDEvent) 
 {
@@ -601,6 +603,20 @@ void CTestDlg::OnTimer(UINT nIDEvent)
 	if(nIDEvent == 1)
 	{
 		OnRecvComData();
+		
+		if(timer_cnt_60ms>0)
+		{
+			timer_cnt_60ms--;
+			if(timer_cnt_60ms==0)
+			{
+				GetDlgItem(IDC_BUTTON_SEND)->EnableWindow(TRUE);
+			}
+		}
+		
+		itoa(int(timer_cnt_60ms*60/1000),m_count_djs,10);
+		SetDlgItemText(IDC_DJS,m_count_djs);
+
+
 	}
 
 	CDialog::OnTimer(nIDEvent);
@@ -615,7 +631,7 @@ void CTestDlg::OnOpen()
 	int nIndex = ((CComboBox*)GetDlgItem(IDC_COMBO5))->GetCurSel();
 	
 	InintCom(nIndex);
-	SetTimer(1,600,0);
+	SetTimer(1,60,0);
 //	Delay(10);
 
 	char ICJC_MSG[20]={0x24,0x49,0x43,0x4a,0x43,0x00,0x0c,0x00,0x00,0x00,0x00,0x2b,0x0d,0x0a};
@@ -796,13 +812,14 @@ void CTestDlg::OnSend()
 	m_com.write(ALL_HEAD,18);
 	m_com.write(MSG_TX,msg_num+3);
 
+//	timer_cnt_60ms=1000;
+	timer_cnt_60ms=1016;
+	GetDlgItem(IDC_BUTTON_SEND)->EnableWindow(FALSE);
+
 
 //	m_com.write(&text_tx_p);
 //	int bytes_temp=1;
 //	bytes_temp  = m_com.write((char *)&text_tx);
 }
 
-void init_send_GETIC(void)
-{
 
-}
