@@ -62,6 +62,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
+	CFont m_font;
 	CBrush m_brush;
 };
 

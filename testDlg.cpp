@@ -276,6 +276,9 @@ END_MESSAGE_MAP()
 BOOL CTestDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	CEdit*pEdt=(CEdit*)GetDlgItem(IDC_DJS);
+	m_font.CreatePointFont(300,"¿¬Ìå_GB2312");
+	pEdt->SetFont(&m_font);
 
 	// Add "About..." menu item to system menu.
 	((CComboBox*)GetDlgItem(IDC_COMBO5))->AddString("COM0");
@@ -594,14 +597,9 @@ BOOL CTestDlg::OnRecvComData()
 		index_comma_pre=index_comma+1;
 
 
-		index_comma = strBuffer.Find(',',index_start+48);
-		m_roll=strBuffer.Mid(index_start+48,index_comma-index_start-48);
-		SetDlgItemText(IDC_ROLL,m_roll);
-		index_comma_pre=index_comma+1;
-
 		index_comma = strBuffer.Find(',',index_comma_pre);
 		m_roll=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);
-		SetDlgItemText(IDC_PITCH,m_pitch);
+		SetDlgItemText(IDC_ROLL,m_roll);
 		index_comma_pre=index_comma+1;
 
 		index_comma = strBuffer.Find(',',index_comma_pre);
