@@ -32,6 +32,13 @@ public:
 	//CString m_shuju1;
 	//int ID;
 
+	CBitmap m_bitmap;
+	CButton m_button_fdj1;
+	CButton m_button_fdj2;
+	CButton m_button_dev1;
+	CButton m_button_dev2;
+	CButton m_button_dev3;
+
    //int GetStringCount(CString trTemp, CString gGPS);
 
 // Dialog Data
@@ -59,6 +66,10 @@ protected:
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnSend();
 	afx_msg void OnOpen();
+	afx_msg void OnButton4();
+	afx_msg void OnButtonDev1();
+	afx_msg void OnButtonDev2();
+	afx_msg void OnButtonDev3();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

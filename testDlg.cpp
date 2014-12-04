@@ -255,6 +255,11 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CTestDlg)
 	DDX_Control(pDX, IDC_BUTTON1, m_com1);
+	DDX_Control(pDX, IDC_BUTTON_FDJ1, m_button_fdj1);
+	DDX_Control(pDX, IDC_BUTTON_FDJ2, m_button_fdj2);
+	DDX_Control(pDX, IDC_BUTTON_DEV1, m_button_dev1);
+	DDX_Control(pDX, IDC_BUTTON_DEV2, m_button_dev2);
+	DDX_Control(pDX, IDC_BUTTON_DEV3, m_button_dev3);
 	//}}AFX_DATA_MAP
 }
 
@@ -266,6 +271,9 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BUTTON2, OnSend)
 	ON_BN_CLICKED(IDC_BUTTON1, OnOpen)
+	ON_BN_CLICKED(IDC_BUTTON_DEV1, OnButtonDev1)
+	ON_BN_CLICKED(IDC_BUTTON_DEV2, OnButtonDev2)
+	ON_BN_CLICKED(IDC_BUTTON_DEV3, OnButtonDev3)
 	//}}AFX_MSG_MAP
 	ON_MESSAGE(ON_COM_RECEIVE, OnRecvComData)
 END_MESSAGE_MAP()
@@ -277,7 +285,7 @@ BOOL CTestDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	CEdit*pEdt=(CEdit*)GetDlgItem(IDC_DJS);
-	m_font.CreatePointFont(300,"¿¬Ìå_GB2312");
+	m_font.CreatePointFont(400,"¿¬Ìå_GB2312");
 	pEdt->SetFont(&m_font);
 
 	// Add "About..." menu item to system menu.
@@ -324,7 +332,14 @@ BOOL CTestDlg::OnInitDialog()
 	//OnRecvComData();
 //	rx_counts=0;
 	
-	
+	m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+//	GetDlgItem(IDC_BUTTON_SEND)->SetBitmap(m_bitmap);
+	m_button_fdj1.SetBitmap(m_bitmap);
+
+
+
+//	GetDlgItem(IDC_BUTTON_SEND)->SetBitmap(m_bitmap);
+	m_button_fdj2.SetBitmap(m_bitmap);
 	dbw_info_impl_init();
 
 
@@ -557,6 +572,7 @@ BOOL CTestDlg::OnRecvComData()
 						
 						
 		m_year=strBuffer.Mid(index_start+43,2);
+		m_year = "20"+m_year;
 		SetDlgItemText(IDC_Year,m_year);
 		
 		int index_comma;
@@ -590,8 +606,25 @@ BOOL CTestDlg::OnRecvComData()
 		fadongji1_str=CString(fadongji1);
 		fadongji2=((fadongji>>5)&0x1)+'0';
 		fadongji2_str=CString(fadongji2);
-		SetDlgItemText(IDC_FDJ1,fadongji1_str);
-		SetDlgItemText(IDC_FDJ2,fadongji2_str);
+		if(!fadongji1)
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+		}else
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_RED);
+		}
+			m_button_fdj1.SetBitmap(m_bitmap);
+
+		if(!fadongji2)
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+		}else
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_RED);
+		}
+			m_button_fdj2.SetBitmap(m_bitmap);
+//		SetDlgItemText(IDC_FDJ1,fadongji1_str);
+//		SetDlgItemText(IDC_FDJ2,fadongji2_str);
 
 		index_comma = strBuffer.Find(',',index_comma_pre);
 		index_comma_pre=index_comma+1;
@@ -852,3 +885,61 @@ void CTestDlg::OnSend()
 }
 
 
+
+void CTestDlg::OnButton4() 
+{
+	// TODO: Add your control notification handler code here
+	
+	
+}
+bool dev1_state = 0;
+bool dev2_state = 0;
+bool dev3_state = 0;
+
+void CTestDlg::OnButtonDev1() 
+{
+	// TODO: Add your control notification handler code here
+	dev1_state=!dev1_state;
+
+			if(!dev1_state)
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+		}else
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+		}
+			m_button_dev1.SetBitmap(m_bitmap);
+	
+}
+
+void CTestDlg::OnButtonDev2() 
+{
+	// TODO: Add your control notification handler code here
+		dev2_state=!dev2_state;
+
+			if(!dev2_state)
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+		}else
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+		}
+			m_button_dev2.SetBitmap(m_bitmap);
+	
+}
+
+void CTestDlg::OnButtonDev3() 
+{
+	// TODO: Add your control notification handler code here
+		dev3_state=!dev3_state;
+
+			if(!dev3_state)
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+		}else
+		{
+			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+		}
+			m_button_dev3.SetBitmap(m_bitmap);
+	
+}

@@ -8,6 +8,10 @@
 #define IDD_TEST_DIALOG                 102
 #define IDR_MAINFRAME                   128
 #define IDB_BITMAP1                     131
+#define IDB_BITMAP_RED                  131
+#define IDB_BITMAP_GREEN                133
+#define IDB_BITMAP_CLOSE                134
+#define IDB_BITMAP_OPEN                 135
 #define IDC_BEIJINGSHIJIAN              1001
 #define IDC_Year                        1002
 #define IDC_JINGDU1                     1003
@@ -49,9 +53,7 @@
 #define IDC_BUTTON_SEND                 1053
 #define IDC_COMBO5                      1055
 #define IDC_EDIT1                       1056
-#define IDC_FDJ1                        1056
 #define IDC_EDIT2                       1057
-#define IDC_FDJ2                        1057
 #define IDC_EDIT3                       1058
 #define IDC_ROLL                        1058
 #define IDC_EDIT4                       1059
@@ -61,14 +63,19 @@
 #define IDC_DEBUG                       1061
 #define IDC_COUNT                       1062
 #define IDC_DJS                         1063
+#define IDC_BUTTON_FDJ1                 1070
+#define IDC_BUTTON_FDJ2                 1071
+#define IDC_BUTTON_DEV1                 1072
+#define IDC_BUTTON_DEV2                 1073
+#define IDC_BUTTON_DEV3                 1074
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1064
+#define _APS_NEXT_CONTROL_VALUE         1073
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
