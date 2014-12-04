@@ -462,8 +462,6 @@ BOOL CTestDlg::OnRecvComData()
 	//显示
 	if(cmd_rcv_flag)
 	{
-	
-
 		strBuffer=RCV_CMD;
 
 		char  m_hour[100];
@@ -472,6 +470,7 @@ BOOL CTestDlg::OnRecvComData()
 		CString m_day;
 		CString m_month;
 		CString m_year;
+		CString m_speed;
 		CString m_jihao;
 		CString m_fadongji;
 		char fadongji;
@@ -495,7 +494,82 @@ BOOL CTestDlg::OnRecvComData()
 
 		//char ch0;
 
-		//机号信息
+		int index_start =0;
+
+
+		//时间信息
+		hour=strBuffer.Mid(index_start,2);
+		itoa((atoi(hour)+8)%24,m_hour,10);
+		SetDlgItemText(IDC_Hour,m_hour);
+
+		m_min=strBuffer.Mid(index_start+2,2);
+		SetDlgItemText(IDC_Min,m_min);
+
+		m_sec=strBuffer.Mid(index_start+4,5);
+		SetDlgItemText(IDC_Sec,m_sec);
+
+		
+		//位置信息
+
+		m_weidu=strBuffer.Mid(index_start+9,2);
+		m_weiduf=strBuffer.Mid(index_start+11,9);
+		SetDlgItemText(IDC_Weidu,m_weidu);
+		SetDlgItemText(IDC_Weiduf,m_weiduf);
+	//#if 0	
+		m_wei=strBuffer.Mid(index_start+20,1);
+/*
+		if(m_wei.GetAt(0)=='N')
+			m_wei="N";
+		else m_wei="W";//定位信息提取
+		*/
+		SetDlgItemText(IDC_Wei,m_wei);
+					
+		
+		m_jingdu=strBuffer.Mid(index_start+21,3);//经度信息提取
+		m_jingduf=strBuffer.Mid(index_start+24,9);
+		SetDlgItemText(IDC_Jingdu,m_jingdu);
+		SetDlgItemText(IDC_Jingduf,m_jingduf);
+					
+		
+		m_jing=strBuffer.Mid(index_start+33,1);
+		/*
+		if(m_jing.GetAt(0)=='W')
+			m_jing="W";
+		else m_jing="东经";//定位信息提取
+		*/
+		SetDlgItemText(IDC_Jing,m_jing);
+//+1
+
+		m_haiba=strBuffer.Mid(index_start+34,5);//海拔信息提取
+		SetDlgItemText(IDC_Haiba,m_haiba);
+
+
+		m_day=strBuffer.Mid(index_start+39,2);
+		SetDlgItemText(IDC_Day,m_day);    //日期
+						
+				
+						
+		m_month=strBuffer.Mid(index_start+41,2);
+		SetDlgItemText(IDC_Month,m_month);
+						
+						
+		m_year=strBuffer.Mid(index_start+43,2);
+		SetDlgItemText(IDC_Year,m_year);
+		
+		int index_comma;
+		int index_comma_pre;
+
+		index_comma = strBuffer.Find(',',index_start+45);
+		m_speed=strBuffer.Mid(index_start+45,index_comma-index_start-45);   //速度
+		SetDlgItemText(IDC_SPEED,m_speed);
+		index_comma_pre=index_comma+1;
+
+		index_comma = strBuffer.Find(',',index_comma_pre);
+		m_jihao=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);   //飞机号
+		SetDlgItemText(IDC_JIHAO,m_jihao);
+		index_comma_pre=index_comma+1;
+
+/*		//机号信息
 		m_jihao=strBuffer.Left(3);
 		SetDlgItemText(IDC_JIHAO,m_jihao);
 		
@@ -506,70 +580,28 @@ BOOL CTestDlg::OnRecvComData()
 		fadongji2_str=CString(fadongji2);
 		SetDlgItemText(IDC_FDJ1,fadongji1_str);
 		SetDlgItemText(IDC_FDJ2,fadongji2_str);
-		
+*/
+
+		fadongji=strBuffer.GetAt(index_comma_pre);
+		fadongji1=((fadongji>>1)&0x1)+'0';
+		fadongji1_str=CString(fadongji1);
+		fadongji2=((fadongji>>5)&0x1)+'0';
+		fadongji2_str=CString(fadongji2);
+		SetDlgItemText(IDC_FDJ1,fadongji1_str);
+		SetDlgItemText(IDC_FDJ2,fadongji2_str);
+
+		index_comma = strBuffer.Find(',',index_comma_pre);
+		index_comma_pre=index_comma+1;
 
 
-		//时间信息
-		hour=strBuffer.Mid(4,2);
-		itoa((atoi(hour)+8)%24,m_hour,10);
-		SetDlgItemText(IDC_Hour,m_hour);
-
-		m_min=strBuffer.Mid(6,2);
-		SetDlgItemText(IDC_Min,m_min);
-
-		m_sec=strBuffer.Mid(8,5);
-		SetDlgItemText(IDC_Sec,m_sec);
-
-		
-		//位置信息
-
-		m_weidu=strBuffer.Mid(13,2);
-		m_weiduf=strBuffer.Mid(15,9);
-		SetDlgItemText(IDC_Weidu,m_weidu);
-		SetDlgItemText(IDC_Weiduf,m_weiduf);
-	//#if 0	
-		m_wei=strBuffer.Mid(24,1);
-
-		if(m_wei.GetAt(0)=='N')
-			m_wei="北纬";
-		else m_wei="南纬";//定位信息提取
-		SetDlgItemText(IDC_Wei,m_wei);
-					
-		
-		m_jingdu=strBuffer.Mid(25,3);//经度信息提取
-		m_jingduf=strBuffer.Mid(28,9);
-		SetDlgItemText(IDC_Jingdu,m_jingdu);
-		SetDlgItemText(IDC_Jingduf,m_jingduf);
-					
-		
-		m_jing=strBuffer.Mid(37,1);
-		if(m_jing.GetAt(0)=='W')
-			m_jing="西经";
-		else m_jing="东经";//定位信息提取
-		SetDlgItemText(IDC_Jing,m_jing);
-
-
-		m_haiba=strBuffer.Mid(38,5);//海拔信息提取
-		SetDlgItemText(IDC_Haiba,m_haiba);
-
-
-		m_day=strBuffer.Mid(43,2);
-		SetDlgItemText(IDC_Day,m_day);
-						
-				
-						
-		m_month=strBuffer.Mid(45,2);
-		SetDlgItemText(IDC_Month,m_month);
-						
-						
-		m_year=strBuffer.Mid(47,2);
-		SetDlgItemText(IDC_Year,m_year);
-		
-		int index_comma;
-		int index_comma_pre;
-		index_comma = strBuffer.Find(',',49);
-		m_roll=strBuffer.Mid(49,index_comma-49);
+		index_comma = strBuffer.Find(',',index_start+48);
+		m_roll=strBuffer.Mid(index_start+48,index_comma-index_start-48);
 		SetDlgItemText(IDC_ROLL,m_roll);
+		index_comma_pre=index_comma+1;
+
+		index_comma = strBuffer.Find(',',index_comma_pre);
+		m_roll=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);
+		SetDlgItemText(IDC_PITCH,m_pitch);
 		index_comma_pre=index_comma+1;
 
 		index_comma = strBuffer.Find(',',index_comma_pre);
@@ -579,8 +611,7 @@ BOOL CTestDlg::OnRecvComData()
 
 		index_comma = strBuffer.Find(',',index_comma_pre);
 		m_yaw=strBuffer.Mid(index_comma_pre,index_comma-index_comma_pre);
-		SetDlgItemText(IDC_YAW,m_yaw);
-						
+		SetDlgItemText(IDC_YAW,m_yaw);						
 	//#endif				
 			strBuffer.Empty();
 			char m_rx_counts[10];
@@ -814,7 +845,7 @@ void CTestDlg::OnSend()
 
 //	timer_cnt_60ms=1000;
 	timer_cnt_60ms=1016;
-	GetDlgItem(IDC_BUTTON_SEND)->EnableWindow(FALSE);
+//	GetDlgItem(IDC_BUTTON_SEND)->EnableWindow(FALSE);
 
 
 //	m_com.write(&text_tx_p);

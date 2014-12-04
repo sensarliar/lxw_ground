@@ -16,6 +16,7 @@
 #define IDC_Jingdu                      1006
 #define IDC_WEIDU1                      1007
 #define IDC_Gspeed                      1008
+#define IDC_SPEED                       1008
 #define IDC_Nspeed                      1009
 #define IDC_Espeed                      1010
 #define IDC_Dimiansulv                  1011
