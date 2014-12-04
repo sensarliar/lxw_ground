@@ -332,14 +332,14 @@ BOOL CTestDlg::OnInitDialog()
 	//OnRecvComData();
 //	rx_counts=0;
 	
-	m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+	m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_GREEN);
 //	GetDlgItem(IDC_BUTTON_SEND)->SetBitmap(m_bitmap);
-	m_button_fdj1.SetBitmap(m_bitmap);
+	m_button_fdj1.SetBitmap(m_bitmap_fdj1);
 
 
-
+	m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_GREEN);
 //	GetDlgItem(IDC_BUTTON_SEND)->SetBitmap(m_bitmap);
-	m_button_fdj2.SetBitmap(m_bitmap);
+	m_button_fdj2.SetBitmap(m_bitmap_fdj2);
 	dbw_info_impl_init();
 
 
@@ -454,7 +454,7 @@ BOOL CTestDlg::OnRecvComData()
 	{
 		Rx_win_text="  ";
 	}
-	GetDlgItem(IDC_DEBUG)->SetWindowText(Rx_win_text);
+//	GetDlgItem(IDC_DEBUG)->SetWindowText(Rx_win_text);
 
 	i=0;
 	bytes_temp++;
@@ -608,21 +608,25 @@ BOOL CTestDlg::OnRecvComData()
 		fadongji2_str=CString(fadongji2);
 		if(!fadongji1)
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+			m_bitmap_fdj1.Detach();
+			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_GREEN);
 		}else
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_RED);
+			m_bitmap_fdj1.Detach();
+			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_RED);
 		}
-			m_button_fdj1.SetBitmap(m_bitmap);
+	//		m_button_fdj1.SetBitmap(m_bitmap_fdj1);
 
 		if(!fadongji2)
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_GREEN);
+			m_bitmap_fdj2.Detach();
+			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_GREEN);
 		}else
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_RED);
+			m_bitmap_fdj2.Detach();
+			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_RED);
 		}
-			m_button_fdj2.SetBitmap(m_bitmap);
+			m_button_fdj2.SetBitmap(m_bitmap_fdj2);
 //		SetDlgItemText(IDC_FDJ1,fadongji1_str);
 //		SetDlgItemText(IDC_FDJ2,fadongji2_str);
 
@@ -903,12 +907,14 @@ void CTestDlg::OnButtonDev1()
 
 			if(!dev1_state)
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+			m_bitmap_dev1.Detach();
+			m_bitmap_dev1.LoadBitmap(IDB_BITMAP_OPEN);
 		}else
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+			m_bitmap_dev1.Detach();
+			m_bitmap_dev1.LoadBitmap(IDB_BITMAP_CLOSE);
 		}
-			m_button_dev1.SetBitmap(m_bitmap);
+			m_button_dev1.SetBitmap(m_bitmap_dev1);
 	
 }
 
@@ -919,12 +925,14 @@ void CTestDlg::OnButtonDev2()
 
 			if(!dev2_state)
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+			m_bitmap_dev2.Detach();
+			m_bitmap_dev2.LoadBitmap(IDB_BITMAP_OPEN);
 		}else
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+			m_bitmap_dev2.Detach();
+			m_bitmap_dev2.LoadBitmap(IDB_BITMAP_CLOSE);
 		}
-			m_button_dev2.SetBitmap(m_bitmap);
+			m_button_dev2.SetBitmap(m_bitmap_dev2);
 	
 }
 
@@ -935,11 +943,13 @@ void CTestDlg::OnButtonDev3()
 
 			if(!dev3_state)
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_OPEN);
+			m_bitmap_dev3.Detach();
+			m_bitmap_dev3.LoadBitmap(IDB_BITMAP_OPEN);
 		}else
 		{
-			m_bitmap.LoadBitmap(IDB_BITMAP_CLOSE);
+			m_bitmap_dev3.Detach();
+			m_bitmap_dev3.LoadBitmap(IDB_BITMAP_CLOSE);
 		}
-			m_button_dev3.SetBitmap(m_bitmap);
+			m_button_dev3.SetBitmap(m_bitmap_dev3);
 	
 }

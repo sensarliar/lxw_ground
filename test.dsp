@@ -160,6 +160,14 @@ SOURCE=.\res\bmp00001.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\bmp00002.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\bmp00003.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\test.ico
 # End Source File
 # Begin Source File

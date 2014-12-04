@@ -32,7 +32,11 @@ public:
 	//CString m_shuju1;
 	//int ID;
 
-	CBitmap m_bitmap;
+	CBitmap m_bitmap_fdj1;
+	CBitmap m_bitmap_fdj2;
+	CBitmap m_bitmap_dev1;
+	CBitmap m_bitmap_dev2;
+	CBitmap m_bitmap_dev3;
 	CButton m_button_fdj1;
 	CButton m_button_fdj2;
 	CButton m_button_dev1;
