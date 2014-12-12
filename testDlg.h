@@ -43,6 +43,14 @@ public:
 	CButton m_button_dev2;
 	CButton m_button_dev3;
 
+	CBitmap m_bitmap_sta_dev1;
+	CBitmap m_bitmap_sta_dev2;
+	CBitmap m_bitmap_sta_dev3;
+	CButton m_button_sta_dev1;
+	CButton m_button_sta_dev2;
+	CButton m_button_sta_dev3;
+	CFile file;
+
    //int GetStringCount(CString trTemp, CString gGPS);
 
 // Dialog Data

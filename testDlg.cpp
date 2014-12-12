@@ -260,6 +260,9 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_DEV1, m_button_dev1);
 	DDX_Control(pDX, IDC_BUTTON_DEV2, m_button_dev2);
 	DDX_Control(pDX, IDC_BUTTON_DEV3, m_button_dev3);
+	DDX_Control(pDX, IDC_BUTTON_STA_DEV1, m_button_sta_dev1);
+	DDX_Control(pDX, IDC_BUTTON_STA_DEV2, m_button_sta_dev2);
+	DDX_Control(pDX, IDC_BUTTON_STA_DEV3, m_button_sta_dev3);
 	//}}AFX_DATA_MAP
 }
 
@@ -280,6 +283,9 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CTestDlg message handlers
+//CFile file;
+
+
 
 BOOL CTestDlg::OnInitDialog()
 {
@@ -340,6 +346,39 @@ BOOL CTestDlg::OnInitDialog()
 	m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_GREEN);
 //	GetDlgItem(IDC_BUTTON_SEND)->SetBitmap(m_bitmap);
 	m_button_fdj2.SetBitmap(m_bitmap_fdj2);
+
+	m_bitmap_dev1.LoadBitmap(IDB_BITMAP_CLOSE);
+	m_button_dev1.SetBitmap(m_bitmap_dev1);
+
+	m_bitmap_dev2.LoadBitmap(IDB_BITMAP_CLOSE);
+	m_button_dev2.SetBitmap(m_bitmap_dev2);
+
+	m_bitmap_dev3.LoadBitmap(IDB_BITMAP_CLOSE);
+	m_button_dev3.SetBitmap(m_bitmap_dev3);
+
+	m_bitmap_sta_dev1.LoadBitmap(IDB_BITMAP_GRAY);
+	m_button_sta_dev1.SetBitmap(m_bitmap_sta_dev1);
+
+	m_bitmap_sta_dev2.LoadBitmap(IDB_BITMAP_GRAY);
+	m_button_sta_dev2.SetBitmap(m_bitmap_sta_dev2);
+
+	m_bitmap_sta_dev3.LoadBitmap(IDB_BITMAP_GRAY);
+	m_button_sta_dev3.SetBitmap(m_bitmap_sta_dev3);
+
+	if(!file.Open("GroundRecord001.txt",CFile::modeCreate | CFile::modeWrite))
+	{
+		MessageBox("文件打开失败", "GroundRecord001.txt", MB_OK);
+		return false;
+	}
+
+	
+	SetDlgItemText(IDC_FILENAME,file.GetFileName());
+//	SetDlgCheckBox;
+	((CButton *)GetDlgItem(IDC_CHECK1))->SetCheck(TRUE);
+
+	
+
+
 	dbw_info_impl_init();
 
 
@@ -427,6 +466,8 @@ BOOL CTestDlg::OnRecvComData()
 	int i;
 	int bytes_temp = 1;
 	bytes_temp = m_com.read((char *)&receive_buf, 1024);
+
+	file.Write(receive_buf,bytes_temp);
 //	Bytes += bytes_temp;
 	if(bytes_temp <= 0)
 	{
@@ -495,6 +536,10 @@ BOOL CTestDlg::OnRecvComData()
 		char fadongji1;
 		char fadongji2;
 
+		char sta_dev1;
+		char sta_dev2;
+		char sta_dev3;
+
 		CString fadongji1_str;
 		CString fadongji2_str;
 
@@ -523,14 +568,14 @@ BOOL CTestDlg::OnRecvComData()
 		m_min=strBuffer.Mid(index_start+2,2);
 		SetDlgItemText(IDC_Min,m_min);
 
-		m_sec=strBuffer.Mid(index_start+4,5);
+		m_sec=strBuffer.Mid(index_start+4,2);
 		SetDlgItemText(IDC_Sec,m_sec);
 
 		
 		//位置信息
 
 		m_weidu=strBuffer.Mid(index_start+9,2);
-		m_weiduf=strBuffer.Mid(index_start+11,9);
+		m_weiduf=strBuffer.Mid(index_start+11,7);
 		SetDlgItemText(IDC_Weidu,m_weidu);
 		SetDlgItemText(IDC_Weiduf,m_weiduf);
 	//#if 0	
@@ -544,7 +589,7 @@ BOOL CTestDlg::OnRecvComData()
 					
 		
 		m_jingdu=strBuffer.Mid(index_start+21,3);//经度信息提取
-		m_jingduf=strBuffer.Mid(index_start+24,9);
+		m_jingduf=strBuffer.Mid(index_start+24,7);
 		SetDlgItemText(IDC_Jingdu,m_jingdu);
 		SetDlgItemText(IDC_Jingduf,m_jingduf);
 					
@@ -577,9 +622,11 @@ BOOL CTestDlg::OnRecvComData()
 		
 		int index_comma;
 		int index_comma_pre;
+		int index_comma_dot;
 
 		index_comma = strBuffer.Find(',',index_start+45);
-		m_speed=strBuffer.Mid(index_start+45,index_comma-index_start-45);   //速度
+		index_comma_dot = strBuffer.Find('.',index_start+45);
+		m_speed=strBuffer.Mid(index_start+45,index_comma_dot+2-index_start-45);   //速度
 		SetDlgItemText(IDC_SPEED,m_speed);
 		index_comma_pre=index_comma+1;
 
@@ -602,33 +649,21 @@ BOOL CTestDlg::OnRecvComData()
 */
 
 		fadongji=strBuffer.GetAt(index_comma_pre);
-		fadongji1=((fadongji>>1)&0x1)+'0';
+		fadongji1=((fadongji>>1)&0x1);
 		fadongji1_str=CString(fadongji1);
-		fadongji2=((fadongji>>5)&0x1)+'0';
+		fadongji2=((fadongji>>5)&0x1);
 		fadongji2_str=CString(fadongji2);
-		if(!fadongji1)
-		{
-			m_bitmap_fdj1.Detach();
-			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_GREEN);
-		}else
-		{
-			m_bitmap_fdj1.Detach();
-			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_RED);
-		}
-	//		m_button_fdj1.SetBitmap(m_bitmap_fdj1);
 
-		if(!fadongji2)
-		{
-			m_bitmap_fdj2.Detach();
-			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_GREEN);
-		}else
-		{
-			m_bitmap_fdj2.Detach();
-			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_RED);
-		}
-			m_button_fdj2.SetBitmap(m_bitmap_fdj2);
-//		SetDlgItemText(IDC_FDJ1,fadongji1_str);
-//		SetDlgItemText(IDC_FDJ2,fadongji2_str);
+	//	fadongji =0xff;
+		sta_dev1=((fadongji>>0)&0x1);		
+		sta_dev2=((fadongji>>2)&0x1);
+		sta_dev3=((fadongji>>4)&0x1);
+
+//		fadongji2=((fadongji>>2)&0x1)+'0';
+
+
+
+
 
 		index_comma = strBuffer.Find(',',index_comma_pre);
 		index_comma_pre=index_comma+1;
@@ -654,6 +689,66 @@ BOOL CTestDlg::OnRecvComData()
 			rx_counts++;
 			itoa(rx_counts,m_rx_counts,10);
 			SetDlgItemText(IDC_COUNT,m_rx_counts);
+
+		if(!fadongji1)
+		{
+			m_bitmap_fdj1.Detach();
+			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_GREEN);
+		}else
+		{
+			m_bitmap_fdj1.Detach();
+			m_bitmap_fdj1.LoadBitmap(IDB_BITMAP_RED);
+		}
+			m_button_fdj1.SetBitmap(m_bitmap_fdj1);
+
+		if(!fadongji2)
+		{
+			m_bitmap_fdj2.Detach();
+			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_GREEN);
+		}else
+		{
+			m_bitmap_fdj2.Detach();
+			m_bitmap_fdj2.LoadBitmap(IDB_BITMAP_RED);
+		}
+			m_button_fdj2.SetBitmap(m_bitmap_fdj2);
+//		SetDlgItemText(IDC_FDJ1,fadongji1_str);
+//		SetDlgItemText(IDC_FDJ2,fadongji2_str);
+
+				if(!sta_dev1)
+		{
+			m_bitmap_sta_dev1.Detach();
+			m_bitmap_sta_dev1.LoadBitmap(IDB_BITMAP_GRAY);
+		}else
+		{
+			m_bitmap_sta_dev1.Detach();
+			m_bitmap_sta_dev1.LoadBitmap(IDB_BITMAP_GREEN);
+		}
+			m_button_sta_dev1.SetBitmap(m_bitmap_sta_dev1);
+
+		if(!sta_dev2)
+		{
+			m_bitmap_sta_dev2.Detach();
+			m_bitmap_sta_dev2.LoadBitmap(IDB_BITMAP_GRAY);
+		}else
+		{
+			m_bitmap_sta_dev2.Detach();
+			m_bitmap_sta_dev2.LoadBitmap(IDB_BITMAP_GREEN);
+		}
+			m_button_sta_dev2.SetBitmap(m_bitmap_sta_dev2);
+
+
+		if(!sta_dev3)
+		{
+			m_bitmap_sta_dev3.Detach();
+			m_bitmap_sta_dev3.LoadBitmap(IDB_BITMAP_GRAY);
+		}else
+		{
+			m_bitmap_sta_dev3.Detach();
+			m_bitmap_sta_dev3.LoadBitmap(IDB_BITMAP_GREEN);
+		}
+			m_button_sta_dev3.SetBitmap(m_bitmap_sta_dev3);
+
+
 
 	}
 
@@ -702,6 +797,7 @@ void CTestDlg::OnOpen()
 
 	char ICJC_MSG[20]={0x24,0x49,0x43,0x4a,0x43,0x00,0x0c,0x00,0x00,0x00,0x00,0x2b,0x0d,0x0a};
 	m_com.write(ICJC_MSG,14);
+
 
 
 }
@@ -839,6 +935,10 @@ void send_one_frame_data(void) {
 
 }
 
+bool dev1_state = 1;
+bool dev2_state = 1;
+bool dev3_state = 1;
+
 
 void CTestDlg::OnSend() 
 {
@@ -862,10 +962,38 @@ void CTestDlg::OnSend()
 
 	}
 	*/
+	char trans_dev_sta = 0x88;
 
+	if(!dev1_state)
+	{
+		trans_dev_sta |= 1<<0;
+	}else
+	{
+		trans_dev_sta &= ~(1<<0);
+	}
+
+
+	if(!dev2_state)
+	{
+		trans_dev_sta |= 1<<1;
+	}else
+	{
+		trans_dev_sta &= ~(1<<1);
+	}
+
+	if(!dev3_state)
+	{
+		trans_dev_sta |= 1<<2;
+	}else
+	{
+		trans_dev_sta &= ~(1<<2);
+	}
+
+	MSG_TX[0] = trans_dev_sta;
+	
 	char * text_tx;
 	text_tx= text.GetBuffer(0);
-	int i=0;
+	int i=1;
 	while(*text_tx)
 	{
 		MSG_TX[i++]=*text_tx;
@@ -896,9 +1024,7 @@ void CTestDlg::OnButton4()
 	
 	
 }
-bool dev1_state = 0;
-bool dev2_state = 0;
-bool dev3_state = 0;
+
 
 void CTestDlg::OnButtonDev1() 
 {
