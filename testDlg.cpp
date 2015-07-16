@@ -56,11 +56,11 @@ void dbw_info_impl_init( void ) {
 
 
 /**
- * parse GPGGA-nmea-messages stored in
+ * parse $TXXX MESSAGE stored in
  * dbw_info.msg_buf .
  */
 void parse_dbw_info_GM002(void) {
-  int i = 7;     // current position in the message, start after: GPGGA,
+  int i = 7;     // current position in the message, start after: TXXX,
 	int j = 0;
 	int temp_len = 255;
 
@@ -115,6 +115,10 @@ void parse_dbw_info_GM002(void) {
  * parse_nmea_char() has a complete line.
  * Find out what type of message it is and
  * hand it to the parser for that type.
+ * received message format: $TXXX^.sî`.æ55256.003413.508880N10852.685227E372.91303150.121,0007,C,9.4,5.25,27.55,Í$
+ * hex format: 24 54 58 58 58 00 5E 04 73 EE 60 04 E6 10 00 00 02 50 A4 30 36 30 30 30 33 2E 30 30 33 34 31 33 
+ * 2E 34 39 39 34 34 30 4E 31 30 38 35 32 2E 36 39 31 33 39 34 45 33 39 35 2E 31 31 33 30 33 31 35 30 2E 39 36 
+ * 37 2C 30 30 30 37 2C 43 2C 39 2E 34 2C 35 2E 32 35 2C 32 37 2E 35 35 2C 00 C7 
  */
 void dbw_info_parse_msg( void ) {
 
