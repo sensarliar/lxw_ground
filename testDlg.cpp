@@ -30,7 +30,8 @@ static char THIS_FILE[] = __FILE__;
 struct DbwInfo dbw_info;
 char dbw_info_flag = 0x39;
 		//now addr_   uint8_t INFO_ADDR[4]={0x04,0xE6,0x10};//291822  addr 3B
-char INFO_ADDR[4] = {0x04,0x73,0xEE,0x0};
+//char INFO_ADDR[4] = {0x04,0x73,0xEE,0x0};
+char INFO_ADDR[4] = {0x02,0xF5,0x4C,0x0};
 char RCV_CMD[255];
 int cmd_rcv_flag;
 int cmd_ch_num;
@@ -817,7 +818,8 @@ char INFO_LEN[2]={0x33,0x34};  //2B
 //uint8_t MSG_TX_FLAG=0B01000110;     //1B
 char MSG_TX_FLAG=0x46;     //1B
 //uint8_t MSG_TX_ADDR[4]={0x04,0xE6,0x10};//321040  TX addr   //3B
-char MSG_TX_ADDR[4]={0x04,0xE6,0x10};//  TX addr   //3B
+//char MSG_TX_ADDR[4]={0x04,0xE6,0x10};//  TX addr   //3B
+char MSG_TX_ADDR[4]={0x02,0xF5,0x48};
 char MSG_TX_LEN[2]={0x00,0x00};      //2B
 char MSG_TX_ACK=0x00;               //1B
 char MSG_TX[211]="gaoming";    //1680bit maxium   NON-MIL 628BIT  78B   17B+MSG +1CRC
